@@ -45,7 +45,12 @@
 {
     self = [super init];
     if (self) {
-        _privateItems = [[NSMutableArray alloc] init];
+        NSString *path = [self itemArchivePath];
+        _privateItems = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+        
+        if (!_privateItems) {
+            _privateItems = [[NSMutableArray alloc] init];
+        }
     }
     return self;
 }
@@ -57,7 +62,7 @@
 
 - (BNRItem *)createItem
 {
-    BNRItem *item = [BNRItem randomItem];
+    BNRItem *item = [[BNRItem alloc] init]; // init with some fixed values
 
     [self.privateItems addObject:item];
 
@@ -74,6 +79,16 @@
     [self.privateItems removeObjectIdenticalTo:item];
 }
 
+// Get the path where items are stored
+- (NSString *)itemArchivePath
+{
+    NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                       NSUserDomainMask, // same for all iOS apps
+                                                                       YES); // same for all iOS apps
+    NSString *documentDirectory = [documentDirectories firstObject];
+    return [documentDirectory stringByAppendingPathComponent:@"items.archive"];
+}
+
 - (void)moveItemAtIndex:(NSInteger)fromIndex
                 toIndex:(NSInteger)toIndex
 {
@@ -88,6 +103,15 @@
 
     // Insert item in array at new location
     [self.privateItems insertObject:item atIndex:toIndex];
+}
+
+- (BOOL)saveChanges // save all item info to disk
+{
+    NSString *path = [self itemArchivePath];
+    
+    // return YES on success
+    return [NSKeyedArchiver archiveRootObject:self.privateItems // note that BNRItem conforms to NSCoding
+                                       toFile:path];
 }
 
 @end

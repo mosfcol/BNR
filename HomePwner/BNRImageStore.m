@@ -44,19 +44,54 @@
 
     if (self) {
         _dictionary = [[NSMutableDictionary alloc] init];
+        
+        // listen to low-memory warning
+        NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+        [nc addObserver:self
+               selector:@selector(clearCache:)
+                   name:UIApplicationDidReceiveMemoryWarningNotification
+                 object:nil];
     }
 
     return self;
 }
 
+// store image in dictionary & disk
 - (void)setImage:(UIImage *)image forKey:(NSString *)key
 {
     self.dictionary[key] = image;
+    NSString *imagePath = [self imagePathForKey:key];
+    NSData *imageData = UIImageJPEGRepresentation(image, 0.5);
+    [imageData writeToFile:imagePath atomically:YES];
 }
 
+// Return an image from dictionary, or from disk, or return nil
 - (UIImage *)imageForKey:(NSString *)key
 {
-    return self.dictionary[key];
+    UIImage *result = self.dictionary[key];
+    if (!result) {
+        NSString *imagePath = [self imagePathForKey:key];
+        result = [UIImage imageWithContentsOfFile:imagePath];
+        if (result) {
+            self.dictionary[key] = result;
+        }
+        else {
+            NSLog(@"Error: can't find the image with key [%@]", key);
+        }
+    }
+    
+    return result;
+}
+
+// return image's path in disk
+// the path = doc directory + *key
+- (NSString *)imagePathForKey:(NSString *)key
+{
+    NSArray *documentDirectories = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,
+                                                                       NSUserDomainMask,
+                                                                       YES);
+    NSString *documentDirectory = [documentDirectories firstObject];
+    return [documentDirectory stringByAppendingPathComponent:key];
 }
 
 - (void)deleteImageForKey:(NSString *)key
@@ -65,6 +100,15 @@
         return;
     }
     [self.dictionary removeObjectForKey:key];
+    
+    NSString *imagePath = [self imagePathForKey:key];
+    [[NSFileManager defaultManager] removeItemAtPath:imagePath
+                                               error:nil];
+}
+
+- (void)clearCache:(NSNotification *)note {
+    NSLog(@"Memory low. Flushing items");
+    [self.dictionary removeAllObjects];
 }
 
 @end
