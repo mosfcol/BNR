@@ -23,8 +23,9 @@
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cameraButton;
 
-- (IBAction)takePicture:(id)sender;
-- (IBAction)backgroundTapped:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *serialNumberLabel;
+@property (weak, nonatomic) IBOutlet UILabel *valueLabel;
 
 @end
 
@@ -46,6 +47,13 @@
                                                                                         action:@selector(cancel:)];
             self.navigationItem.leftBarButtonItem = cancelItem;
         }
+        
+        // Register for observing font size changes
+        NSNotificationCenter *defaultCenter = [NSNotificationCenter defaultCenter];
+        [defaultCenter addObserver:self
+                          selector:@selector(updateFonts)
+                              name:UIContentSizeCategoryDidChangeNotification
+                            object:nil];
     }
 
     return self;
@@ -57,6 +65,11 @@
                                    reason:@"Use initForNewItem:"
                                  userInfo:nil];
     return nil;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidLoad
@@ -135,6 +148,8 @@
         // Clear the imageView
         self.imageView.image = nil;
     }
+    
+    [self updateFonts];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -281,6 +296,21 @@ didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     [textField resignFirstResponder];
     return YES;
+}
+
+- (void)updateFonts
+{
+    UIFont *font = [UIFont preferredFontForTextStyle:UIFontTextStyleBody];
+    
+    self.nameLabel.font = font;
+    self.serialNumberLabel.font = font;
+    self.valueLabel.font = font;
+    self.dateLabel.font = font;
+    
+    self.nameField.font = font;
+    self.serialNumberField.font = font;
+    self.valueField.font = font;
+    NSLog(@"Fonts updated");
 }
 
 @end
