@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A332F401B52DE6B005FE176 /* ItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 4A332F3E1B52DE6B005FE176 /* ItemCell.m */; };
+		4A332F411B52DE6B005FE176 /* ItemCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4A332F3F1B52DE6B005FE176 /* ItemCell.xib */; };
 		520AA47F187C4EC00048F174 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 520AA47E187C4EC00048F174 /* Foundation.framework */; };
 		520AA481187C4EC00048F174 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 520AA480187C4EC00048F174 /* CoreGraphics.framework */; };
 		520AA483187C4EC00048F174 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 520AA482187C4EC00048F174 /* UIKit.framework */; };
@@ -38,6 +40,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4A332F3D1B52DE6B005FE176 /* ItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ItemCell.h; sourceTree = "<group>"; };
+		4A332F3E1B52DE6B005FE176 /* ItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ItemCell.m; sourceTree = "<group>"; };
+		4A332F3F1B52DE6B005FE176 /* ItemCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ItemCell.xib; sourceTree = "<group>"; };
 		520AA47B187C4EC00048F174 /* HomePwner.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HomePwner.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		520AA47E187C4EC00048F174 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		520AA480187C4EC00048F174 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -124,6 +129,9 @@
 		520AA484187C4EC00048F174 /* HomePwner */ = {
 			isa = PBXGroup;
 			children = (
+				4A332F3D1B52DE6B005FE176 /* ItemCell.h */,
+				4A332F3E1B52DE6B005FE176 /* ItemCell.m */,
+				4A332F3F1B52DE6B005FE176 /* ItemCell.xib */,
 				520AA48D187C4EC00048F174 /* BNRAppDelegate.h */,
 				520AA48E187C4EC00048F174 /* BNRAppDelegate.m */,
 				520AA4B0187C4F910048F174 /* BNRItem.h */,
@@ -248,6 +256,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4A332F411B52DE6B005FE176 /* ItemCell.xib in Resources */,
 				520AA4C0187C87C50048F174 /* BNRDetailViewController.xib in Resources */,
 				520AA489187C4EC00048F174 /* InfoPlist.strings in Resources */,
 				520AA491187C4EC00048F174 /* Images.xcassets in Resources */,
@@ -273,6 +282,7 @@
 				520AA4B5187C4FC00048F174 /* BNRItemStore.m in Sources */,
 				520AA4C3187CAA690048F174 /* BNRImageStore.m in Sources */,
 				520AA4AF187C4EF00048F174 /* BNRItemsViewController.m in Sources */,
+				4A332F401B52DE6B005FE176 /* ItemCell.m in Sources */,
 				520AA4B2187C4F910048F174 /* BNRItem.m in Sources */,
 				520AA48B187C4EC00048F174 /* main.m in Sources */,
 				520AA48F187C4EC00048F174 /* BNRAppDelegate.m in Sources */,
